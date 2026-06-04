@@ -58,27 +58,27 @@ export async function getOrdersByTenant(tenantId: string) {
 }
 
 export async function updateOrderStatus(
-  orderId:   string,
-  newStatus: OrderStatus,
-  changedBy: string,
-  notes?:    string
-) {
-  const order = await prisma.order.findUnique({ where: { id: orderId } })
-  if (!order) throw new Error('Order not found')
-
-  return prisma.order.update({
-    where: { id: orderId },
-    data: {
-      status: newStatus,
-      statusHistory: {
-        create: {
-          fromStatus: order.status,
-          toStatus:   newStatus,
-          changedBy,
-          notes
+    orderId:   string,
+    newStatus: string,
+    changedBy: string,
+    notes?:    string
+  ) {
+    const order = await prisma.order.findUnique({ where: { id: orderId } })
+    if (!order) throw new Error('Order not found')
+  
+    return prisma.order.update({
+      where: { id: orderId },
+      data: {
+        status: newStatus as OrderStatus,
+        statusHistory: {
+          create: {
+            fromStatus: order.status,
+            toStatus:   newStatus,
+            changedBy,
+            notes
+          }
         }
-      }
-    },
-    include: { statusHistory: true }
-  })
-}
+      },
+      include: { statusHistory: true }
+    })
+  }
