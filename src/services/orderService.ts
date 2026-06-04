@@ -1,5 +1,7 @@
 import { prisma } from '../lib/prisma'
 import { OrderStatus } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
+
 
 interface OrderItem {
   name: string
