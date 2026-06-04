@@ -25,7 +25,7 @@ export async function createOrder(input: CreateOrderInput) {
       customerName:    input.customerName,
       customerPhone:   input.customerPhone,
       deliveryAddress: input.deliveryAddress,
-      items:           input.items,
+      items:           input.items as unknown as Prisma.JsonArray,
       totalAmount:     input.totalAmount,
       specialRequests: input.specialRequests,
       callId:          input.callId,
